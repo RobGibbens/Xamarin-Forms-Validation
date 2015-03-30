@@ -4,7 +4,7 @@ namespace ValidationTest
 {
 	public partial class MainPage : ContentPage
 	{
-		MainViewModel _viewModel;
+	    readonly MainViewModel _viewModel;
 		public MainPage ()
 		{
 			var validator = new MainViewModelValidator ();

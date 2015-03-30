@@ -2,13 +2,11 @@
 
 namespace ValidationTest
 {
-
-
 	public class App : Application
 	{
 		public App ()
 		{
-			MainPage = new ValidationTest.MainPage();
+			MainPage = new MainPage();
 		}
 
 		protected override void OnStart ()
