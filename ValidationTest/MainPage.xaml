@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+	xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+	x:Class="ValidationTest.MainPage" 
+	xmlns:local="clr-namespace:ValidationTest;assembly=ValidationTest">
+
+	<ContentPage.Resources>
+  		<ResourceDictionary>
+  			<local:NotBoolConverter x:Key="notBoolConverter" />
+  		</ResourceDictionary>
+	</ContentPage.Resources>
+
+	<StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+		<Label HorizontalOptions="StartAndExpand"  Text="Email Address" />
+
+		<Label 
+			HorizontalOptions="StartAndExpand" 
+			Text="{Binding ErrorMessage}" 
+			IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
+
+		<Entry 
+			HorizontalOptions="StartAndExpand" 
+			WidthRequest="200"
+			Text="{Binding EmailAddress}">
+
+			<Entry.Behaviors>
+				<local:MainViewModelEmailBehavior x:Name="emailValidator" />
+			</Entry.Behaviors>
+		</Entry>
+
+		<Label HorizontalOptions="StartAndExpand"  Text="Age" />
+		<Entry 
+			HorizontalOptions="StartAndExpand" 
+			WidthRequest="200"
+			Text="{Binding Age}">
+		</Entry>
+
+		<Switch
+			HorizontalOptions="CenterAndExpand" 
+			WidthRequest="200"
+			IsToggled="{Binding IsAgreementAccepted}">
+		</Switch>
+		<Button Text="Save User" Command="{Binding Save}" />
+	</StackLayout>
+</ContentPage>
