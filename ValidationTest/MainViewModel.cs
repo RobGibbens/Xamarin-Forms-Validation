@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 //using PropertyChanged;
 using System.ComponentModel;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ValidationTest
 {
@@ -36,6 +39,14 @@ namespace ValidationTest
 				}
 			}
 		}
+
+		public IEnumerable<string> AgeChoices
+		{
+			get {
+				return Enumerable.Range (1, 100).Select(x => x.ToString()).ToList ();
+			}
+		}
+
 		bool _isAgreementAccepted;
 		public bool IsAgreementAccepted {
 			get {
@@ -48,6 +59,7 @@ namespace ValidationTest
 				}
 			}
 		}
+
 		string _emailAddress;
 		public string EmailAddress {
 			get {

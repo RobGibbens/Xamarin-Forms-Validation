@@ -13,12 +13,6 @@
 
 	<StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
 		<Label HorizontalOptions="StartAndExpand"  Text="Email Address" />
-
-		<Label 
-			HorizontalOptions="StartAndExpand" 
-			Text="{Binding ErrorMessage}" 
-			IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
-
 		<Entry 
 			HorizontalOptions="StartAndExpand" 
 			WidthRequest="200"
@@ -28,13 +22,18 @@
 				<local:MainViewModelEmailBehavior x:Name="emailValidator" />
 			</Entry.Behaviors>
 		</Entry>
+		<Label 
+			HorizontalOptions="StartAndExpand"
+			FontSize="Small"
+			TextColor="Red" 
+			Text="{Binding Source={x:Reference emailValidator}, Path=ErrorMessage}" 
+			IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
 
 		<Label HorizontalOptions="StartAndExpand"  Text="Age" />
-		<Entry 
-			HorizontalOptions="StartAndExpand" 
-			WidthRequest="200"
-			Text="{Binding Age}">
-		</Entry>
+		<Picker  
+			Title="Age"
+            local:PickerCollection.Items="{Binding AgeChoices}"
+            SelectedIndex="{Binding Age, Mode=TwoWay}" />
 
 		<Switch
 			HorizontalOptions="CenterAndExpand" 

@@ -23,7 +23,18 @@ namespace ValidationTest
 
 		public IEnumerable<ValidationFailure> ValidationErrors { get; private set; }
 
-		public string ErrorMessage { get; set; }
+		string _errorMessage;
+		public string ErrorMessage {
+			get {
+				return _errorMessage;
+			}
+			set {
+				if (_errorMessage != value) {
+					_errorMessage = value;
+					RaisePropertyChanged ();
+				}
+			}
+		}
 
 		public bool Validate ()
 		{
@@ -33,7 +44,18 @@ namespace ValidationTest
 			return validationResult.IsValid;
 		}
 
-		public bool IsValid { get; set; }
+		bool _isValid;
+		public bool IsValid {
+			get {
+				return _isValid;
+			}
+			set {
+				if (_isValid != value) {
+					_isValid = value;
+					RaisePropertyChanged ();
+				}
+			}
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 		public void OnPropertyChanged (string propertyName, object before, object after)
