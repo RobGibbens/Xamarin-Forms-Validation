@@ -10,24 +10,22 @@ namespace ValidationTest
 	{
 		public DelegateCommand Save { get; private set; }
 
-		public DelegateCommand LoadInstructor { get; private set; }
-
-		public MainViewModel (IValidator<MainViewModel> validator, 
-					InstructorModel instructorModel,
-					ClassModel classModel) : base (validator)
+		public MainViewModel (IValidator<MainViewModel> validator, IRepository repository) : base (validator)
 		{
-			this.Instructor = instructorModel;
-			this.Class = classModel;
-
 			this.Save = new DelegateCommand (OnSave, ValidateAll);
 
-			this.PropertyChanged += (s,e) => this.Save.RaiseCanExecuteChanged ();
+			this.Instructor = repository.GetInstructor ();
+			this.Class = repository.GetClass ();
 
-			OnLoadInstructor ();
+			this.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+
+			this.Save.RaiseCanExecuteChanged ();
 		}
 
-		public InstructorModel Instructor { get; set; }
-		public ClassModel Class {get;set;}
+		public InstructorModel Instructor { get; private set; }
+		public ClassModel Class { get; private set; }
 
 		public int Age { get; set; }
 		public bool IsAgreementAccepted { get; set; }
@@ -41,19 +39,16 @@ namespace ValidationTest
 
 		private bool ValidateAll ()
 		{
-			var isValid = Validate () && ValidateModels ();
+			var isViewModelValid = this.Validate ();
+			var areModelsValid = ValidateModels ();
+
+			var isValid = isViewModelValid && areModelsValid;
 			return isValid;
 		}
 
 		private bool ValidateModels ()
 		{
-			return Instructor.Validate() && Class.Validate();
-		}
-
-		public void OnLoadInstructor ()
-		{
-			Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
-			Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			return Instructor.Validate () && Class.Validate ();
 		}
 
 		public void OnSave ()
