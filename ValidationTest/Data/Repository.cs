@@ -1,4 +1,3 @@
-using Xamarin.Forms;
 using FluentValidation;
 
 namespace ValidationTest
@@ -23,6 +22,11 @@ namespace ValidationTest
 		{
 			return new ClassModel (_classValidator);
 		}
-	}
-	
+
+		public void Save()
+		{
+			//Save Instructor
+			//Save Class
+		}
+	}	
 }

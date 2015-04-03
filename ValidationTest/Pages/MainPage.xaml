@@ -35,7 +35,26 @@
 			Title="Age"
 			WidthRequest="200"
             local:PickerCollection.Items="{Binding AgeChoices}"
-            SelectedIndex="{Binding Age, Mode=TwoWay}" />
+            SelectedIndex="{Binding Age, Mode=TwoWay}">
+            <Picker.Behaviors>
+				<local:MainViewModelAgeAcceptanceBehavior x:Name="ageValidator" />
+			</Picker.Behaviors>
+        </Picker>
+
+		<Label HorizontalOptions="StartAndExpand" WidthRequest="200" Text="Accept?" />
+		<Switch
+			HorizontalOptions="CenterAndExpand" 
+			WidthRequest="200"
+			IsToggled="{Binding IsAgreementAccepted}">
+		</Switch>
+		<Label 
+			HorizontalOptions="StartAndExpand"
+			WidthRequest="200"
+			FontSize="Small"
+			TextColor="Red" 
+			Text="{Binding Source={x:Reference ageValidator}, Path=ErrorMessage}" 
+			IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
+
 
 		<Label Text="First Name" HorizontalOptions="StartAndExpand" WidthRequest="200" />
 		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Instructor.FirstName}" />
@@ -43,12 +62,10 @@
 		<Label Text="Last Name" HorizontalOptions="StartAndExpand" WidthRequest="200" />
 		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Instructor.LastName}" />
 
+		<Label Text="Class Title" HorizontalOptions="StartAndExpand" WidthRequest="200" />
+		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Class.Title}" />
 
-		<Switch
-			HorizontalOptions="CenterAndExpand" 
-			WidthRequest="200"
-			IsToggled="{Binding IsAgreementAccepted}">
-		</Switch>
+
 		<Button Text="Save User" Command="{Binding Save}" />
 	</StackLayout>
 </ContentPage>

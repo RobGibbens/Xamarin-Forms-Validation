@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-using FluentValidation;
 
 namespace ValidationTest
 {
@@ -8,11 +7,13 @@ namespace ValidationTest
 	    readonly MainViewModel _viewModel;
 		public MainPage ()
 		{
-			var validator = new MainViewModelValidator ();
+			var viewModelValidator = new MainViewModelValidator ();
 
+			//This really should be an Dependency Injection container
 			var repository = new Repository (new InstructorModelValidator(), new ClassModelValidator());
 
-			_viewModel = new MainViewModel (validator, repository);
+			_viewModel = new MainViewModel (viewModelValidator, repository);
+
 			this.BindingContext = _viewModel;
 			InitializeComponent ();
 		}

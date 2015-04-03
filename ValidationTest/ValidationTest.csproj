@@ -33,9 +33,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Infrastructure\AsyncDelegateCommand.cs" />
     <Compile Include="Models\ClassModel.cs" />
     <Compile Include="Infrastructure\DelegateCommand.cs" />
@@ -48,8 +45,14 @@
     <Compile Include="Infrastructure\PickerCollection.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Validators\ClassModelValidator.cs" />
-    <Compile Include="IRepository.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\Repository.cs" />
+    <Compile Include="Pages\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Behaviors\MainViewModelAgeAcceptanceBehavior.cs" />
+    <Compile Include="Behaviors\EntryBehaviorBase.cs" />
+    <Compile Include="Behaviors\PickerBehaviorBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.5.6337\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.5.6337\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -73,7 +76,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainPage.xaml">
+    <EmbeddedResource Include="Pages\MainPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
@@ -94,5 +97,7 @@
     <Folder Include="Infrastructure\" />
     <Folder Include="Behaviors\" />
     <Folder Include="Validators\" />
+    <Folder Include="Data\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
 </Project>

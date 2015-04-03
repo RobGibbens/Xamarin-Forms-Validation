@@ -3,33 +3,14 @@ using System.Linq;
 
 namespace ValidationTest
 {
-	public class MainViewModelEmailBehavior : Behavior<Entry>
+	public class MainViewModelEmailBehavior : EntryBehaviorBase<MainViewModelEmailBehavior>
 	{
-		static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly ("IsValid", typeof(bool), typeof(MainViewModelEmailBehavior), false);
-		static readonly BindablePropertyKey ErrorMessagePropertyKey = BindableProperty.CreateReadOnly ("ErrorMessage", typeof(string), typeof(MainViewModelEmailBehavior), string.Empty);
-		public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
-		public static readonly BindableProperty ErrorMessageProperty = ErrorMessagePropertyKey.BindableProperty;
-
-		public bool IsValid {
-			get { return (bool)base.GetValue (IsValidProperty); }
-			private set { base.SetValue (IsValidPropertyKey, value); }
-		}
-
-		public string ErrorMessage {
-			get { return (string)base.GetValue (ErrorMessageProperty); }
-			private set { base.SetValue (ErrorMessagePropertyKey, value); }
-		}
-
-		private Entry _entry;
-
-		protected override void OnAttachedTo (Entry bindable)
+		public MainViewModelEmailBehavior () : base ()
 		{
-			_entry = bindable;
-			bindable.BindingContextChanged += (sender, e) => BindingContext = _entry.BindingContext;
-			bindable.TextChanged += HandleTextChanged;
+			this.HandleTextChanged += OnTextChanged;
 		}
 
-		void HandleTextChanged (object sender, TextChangedEventArgs e)
+		void OnTextChanged (object sender, TextChangedEventArgs e)
 		{
 			var viewModel = this.BindingContext as MainViewModel;
 			if (viewModel != null) {
@@ -44,11 +25,6 @@ namespace ValidationTest
 		
 				((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
 			}
-		}
-
-		protected override void OnDetachingFrom (Entry bindable)
-		{
-			bindable.TextChanged -= HandleTextChanged;
 		}
 	}
 }

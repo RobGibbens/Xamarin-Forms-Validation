@@ -10,17 +10,22 @@ namespace ValidationTest
 	{
 		public DelegateCommand Save { get; private set; }
 
+		readonly IRepository _repository;
 		public MainViewModel (IValidator<MainViewModel> validator, IRepository repository) : base (validator)
 		{
+			this.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+
+			_repository = repository;
+
 			this.Save = new DelegateCommand (OnSave, ValidateAll);
 
-			this.Instructor = repository.GetInstructor ();
-			this.Class = repository.GetClass ();
+			this.Instructor = _repository.GetInstructor ();
+			this.Class = _repository.GetClass ();
 
-			this.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
 			Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
 			Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
 
+			//Kick off the inital validation for the screen
 			this.Save.RaiseCanExecuteChanged ();
 		}
 
@@ -53,7 +58,7 @@ namespace ValidationTest
 
 		public void OnSave ()
 		{
-			var x = "";
+			_repository.Save ();
 		}
 	}
 }
