@@ -2,16 +2,11 @@ using System.ComponentModel;
 using FluentValidation;
 using System.Collections.Generic;
 using FluentValidation.Results;
-using System.Windows.Input;
-//using PropertyChanged;
-using System.Linq.Expressions;
-using System;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using PropertyChanged;
 
 namespace ValidationTest
 {
-	//[ImplementPropertyChanged]
+	[ImplementPropertyChanged]
 	public class ViewModelBase<T> : INotifyPropertyChanged where T:class
 	{
 		readonly IValidator<T> _validator;
@@ -23,18 +18,7 @@ namespace ValidationTest
 
 		public IEnumerable<ValidationFailure> ValidationErrors { get; private set; }
 
-		string _errorMessage;
-		public string ErrorMessage {
-			get {
-				return _errorMessage;
-			}
-			set {
-				if (_errorMessage != value) {
-					_errorMessage = value;
-					RaisePropertyChanged ();
-				}
-			}
-		}
+		public string ErrorMessage {get;set;}
 
 		public bool Validate ()
 		{
@@ -44,18 +28,7 @@ namespace ValidationTest
 			return validationResult.IsValid;
 		}
 
-		bool _isValid;
-		public bool IsValid {
-			get {
-				return _isValid;
-			}
-			set {
-				if (_isValid != value) {
-					_isValid = value;
-					RaisePropertyChanged ();
-				}
-			}
-		}
+		public bool IsValid {get;set;}
 
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 		public void OnPropertyChanged (string propertyName, object before, object after)
@@ -65,17 +38,6 @@ namespace ValidationTest
 			if (propertyChanged != null && propertyName != "ValidationErrors") {
 				propertyChanged (this, new PropertyChangedEventArgs (propertyName));
 			}
-		}
-
-		protected void RaisePropertyChanged<T>(Expression<Func<T>> propExpr)
-		{
-			var prop = (PropertyInfo)((MemberExpression)propExpr.Body).Member;
-			this.RaisePropertyChanged(prop.Name);
-		}
-
-		protected void RaisePropertyChanged([CallerMemberName] string propertyName= "")
-		{
-			PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 	

@@ -24,16 +24,25 @@
 		</Entry>
 		<Label 
 			HorizontalOptions="StartAndExpand"
+			WidthRequest="200"
 			FontSize="Small"
 			TextColor="Red" 
 			Text="{Binding Source={x:Reference emailValidator}, Path=ErrorMessage}" 
 			IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
 
-		<Label HorizontalOptions="StartAndExpand"  Text="Age" />
+		<Label HorizontalOptions="StartAndExpand" WidthRequest="200" Text="Age" />
 		<Picker  
 			Title="Age"
+			WidthRequest="200"
             local:PickerCollection.Items="{Binding AgeChoices}"
             SelectedIndex="{Binding Age, Mode=TwoWay}" />
+
+		<Label Text="First Name" HorizontalOptions="StartAndExpand" WidthRequest="200" />
+		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Instructor.FirstName}" />
+
+		<Label Text="Last Name" HorizontalOptions="StartAndExpand" WidthRequest="200" />
+		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Instructor.LastName}" />
+
 
 		<Switch
 			HorizontalOptions="CenterAndExpand" 

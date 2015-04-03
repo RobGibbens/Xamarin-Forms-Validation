@@ -8,7 +8,9 @@ namespace ValidationTest
 		public MainPage ()
 		{
 			var validator = new MainViewModelValidator ();
-			_viewModel = new MainViewModel (validator);
+			var instructorModelValidator = new InstructorModelValidator ();
+
+			_viewModel = new MainViewModel (validator, instructorModelValidator);
 			this.BindingContext = _viewModel;
 			InitializeComponent ();
 		}

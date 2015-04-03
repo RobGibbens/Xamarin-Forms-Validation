@@ -36,14 +36,17 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainViewModel.cs" />
-    <Compile Include="MainViewModelValidator.cs" />
-    <Compile Include="MainViewModelEmailBehavior.cs" />
-    <Compile Include="NotBoolConverter.cs" />
-    <Compile Include="DelegateCommand.cs" />
-    <Compile Include="AsyncDelegateCommand.cs" />
-    <Compile Include="ViewModelBase.cs" />
-    <Compile Include="PickerCollection.cs" />
+    <Compile Include="Infrastructure\AsyncDelegateCommand.cs" />
+    <Compile Include="Models\ClassModel.cs" />
+    <Compile Include="Infrastructure\DelegateCommand.cs" />
+    <Compile Include="Models\InstructorModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="Behaviors\MainViewModelEmailBehavior.cs" />
+    <Compile Include="Infrastructure\NotBoolConverter.cs" />
+    <Compile Include="Validators\InstructorModelValidator.cs" />
+    <Compile Include="Validators\MainViewModelValidator.cs" />
+    <Compile Include="Infrastructure\PickerCollection.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.1.3.5.6337\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.1.3.5.6337\build\portable-win+net45+wp80+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
@@ -82,4 +85,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Xamarin.Forms.1.4.1.6349\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets'))" />
   </Target>
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Infrastructure\" />
+    <Folder Include="Behaviors\" />
+    <Folder Include="Validators\" />
+  </ItemGroup>
 </Project>
