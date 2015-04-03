@@ -18,7 +18,7 @@ namespace ValidationTest
 
 		public IEnumerable<ValidationFailure> ValidationErrors { get; private set; }
 
-		public string ErrorMessage {get;set;}
+		public string ErrorMessage { get; set; }
 
 		public bool Validate ()
 		{
@@ -28,9 +28,10 @@ namespace ValidationTest
 			return validationResult.IsValid;
 		}
 
-		public bool IsValid {get;set;}
+		public bool IsValid { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
 		public void OnPropertyChanged (string propertyName, object before, object after)
 		{
 			//Perform property validation

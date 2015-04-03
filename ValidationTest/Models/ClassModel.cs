@@ -1,16 +1,17 @@
 using FluentValidation;
 using PropertyChanged;
-using System.ComponentModel;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 
 namespace ValidationTest
 {
-
 	[ImplementPropertyChanged]
-	public class ClassModel
+	public class ClassModel : ViewModelBase<ClassModel>
 	{
+		public ClassModel (IValidator<ClassModel> validator) : base (validator)
+		{
+		}
+
+		public string Title { get; set; }
+		public DateTime ScheduledDate { get; set; }
 	}
-	
 }

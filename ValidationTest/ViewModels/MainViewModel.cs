@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 namespace ValidationTest
 {
-
-
 	[ImplementPropertyChanged]
 	public class MainViewModel : ViewModelBase<MainViewModel>
 	{
@@ -14,19 +12,31 @@ namespace ValidationTest
 
 		public DelegateCommand LoadInstructor { get; private set; }
 
-		public InstructorModel Instructor { get; set; }
-
-		IValidator<InstructorModel> _instructorValidator;
-
-		public MainViewModel (IValidator<MainViewModel> validator, IValidator<InstructorModel> instructorValidator) : base (validator)
+		public MainViewModel (IValidator<MainViewModel> validator, 
+					InstructorModel instructorModel,
+					ClassModel classModel) : base (validator)
 		{
-			_instructorValidator = instructorValidator;
+			this.Instructor = instructorModel;
+			this.Class = classModel;
+
 			this.Save = new DelegateCommand (OnSave, ValidateAll);
-			this.LoadInstructor = new DelegateCommand (OnLoadInstructor);
 
-			this.PropertyChanged += (sender, e) => this.Save.RaiseCanExecuteChanged ();
+			this.PropertyChanged += (s,e) => this.Save.RaiseCanExecuteChanged ();
 
-			//OnLoadInstructor ();
+			OnLoadInstructor ();
+		}
+
+		public InstructorModel Instructor { get; set; }
+		public ClassModel Class {get;set;}
+
+		public int Age { get; set; }
+		public bool IsAgreementAccepted { get; set; }
+		public string EmailAddress { get; set; }
+
+		public IEnumerable<string> AgeChoices {
+			get {
+				return Enumerable.Range (1, 100).Select (x => x.ToString ()).ToList ();
+			}
 		}
 
 		private bool ValidateAll ()
@@ -37,31 +47,18 @@ namespace ValidationTest
 
 		private bool ValidateModels ()
 		{
-			return _instructorValidator == null || _instructorValidator.Validate (this.Instructor).IsValid;
+			return Instructor.Validate() && Class.Validate();
 		}
 
 		public void OnLoadInstructor ()
 		{
-			Instructor = new InstructorModel (_instructorValidator);
-			Instructor.PropertyChanged += (sender, e) => this.Save.RaiseCanExecuteChanged ();
+			Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
 		}
 
 		public void OnSave ()
 		{
 			var x = "";
 		}
-
-		public int Age { get; set; }
-
-		public bool IsAgreementAccepted { get; set; }
-
-		public string EmailAddress { get; set; }
-
-		public IEnumerable<string> AgeChoices {
-			get {
-				return Enumerable.Range (1, 100).Select (x => x.ToString ()).ToList ();
-			}
-		}
-
 	}
 }

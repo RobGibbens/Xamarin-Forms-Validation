@@ -10,5 +10,4 @@ namespace ValidationTest
 			RuleFor (x => x.LastName).NotEmpty ();
 		}
 	}
-	
 }

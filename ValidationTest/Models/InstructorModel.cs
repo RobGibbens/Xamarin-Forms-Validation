@@ -1,9 +1,6 @@
 using FluentValidation;
 using PropertyChanged;
-using System.ComponentModel;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ValidationTest
 {
@@ -12,12 +9,11 @@ namespace ValidationTest
 	{
 		public InstructorModel (IValidator<InstructorModel> validator) : base (validator)
 		{
-			
+			this.Classes = new ObservableCollection<ClassModel> ();
 		}
 
 		public string FirstName { get; set; }
-
 		public string LastName { get; set; }
+		public ObservableCollection<ClassModel> Classes { get; set; }
 	}
-	
 }
