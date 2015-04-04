@@ -17,7 +17,7 @@ namespace ValidationTest
 
 			_repository = repository;
 
-			this.Save = new DelegateCommand (OnSave, ValidateAll);
+			this.Save = new DelegateCommand (OnSave, this.Validate);
 
 			this.Instructor = _repository.GetInstructor ();
 			this.Class = _repository.GetClass ();
@@ -42,18 +42,11 @@ namespace ValidationTest
 			}
 		}
 
-		private bool ValidateAll ()
+		public bool Validate ()
 		{
-			var isViewModelValid = this.Validate ();
-			var areModelsValid = ValidateModels ();
-
-			var isValid = isViewModelValid && areModelsValid;
+			var validators = new List<IValidatable> { Instructor, Class };
+			var isValid = base.Validate (validators);
 			return isValid;
-		}
-
-		private bool ValidateModels ()
-		{
-			return Instructor.Validate () && Class.Validate ();
 		}
 
 		public void OnSave ()

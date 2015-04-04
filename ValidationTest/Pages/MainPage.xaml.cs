@@ -1,4 +1,5 @@
 ﻿using Xamarin.Forms;
+using System.Linq;
 
 namespace ValidationTest
 {
@@ -16,6 +17,19 @@ namespace ValidationTest
 
 			this.BindingContext = _viewModel;
 			InitializeComponent ();
+		}
+
+		void OnShowErrors (object sender, System.EventArgs e)
+		{
+			var message = "No errors";
+			_viewModel.Validate ();
+			if (_viewModel.ValidationErrors.Any ()) {
+				message = _viewModel
+								.ValidationErrors
+								.Select (x => x.ErrorMessage)
+								.Aggregate ((current, next) => current + ", " + next);
+			}
+			this.DisplayAlert("Errors", message, "OK");
 		}
 	}
 }

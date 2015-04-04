@@ -3,11 +3,13 @@ using FluentValidation;
 using System.Collections.Generic;
 using FluentValidation.Results;
 using PropertyChanged;
+using System.Linq;
+using System;
 
 namespace ValidationTest
 {
 	[ImplementPropertyChanged]
-	public class ViewModelBase<T> : INotifyPropertyChanged where T:class
+	public class ViewModelBase<T> : INotifyPropertyChanged, IValidatable where T:class
 	{
 		readonly IValidator<T> _validator;
 
@@ -16,19 +18,31 @@ namespace ValidationTest
 			_validator = validator;
 		}
 
-		public IEnumerable<ValidationFailure> ValidationErrors { get; private set; }
-
+		public IEnumerable<ValidationFailure> ValidationErrors { get; set; }
 		public string ErrorMessage { get; set; }
+		public bool IsValid { get; set; }
 
-		public bool Validate ()
+		public virtual bool Validate (IEnumerable<IValidatable> validatables)
 		{
 			var validationResult = _validator.Validate (this);
 			this.ValidationErrors = validationResult.Errors;
-			this.IsValid = validationResult.IsValid;
-			return validationResult.IsValid;
-		}
+			var isValid = validationResult.IsValid;
 
-		public bool IsValid { get; set; }
+			if (validatables != null && validatables.Any ()) {
+				foreach (var validatable in validatables) {
+					validatable.Validate (null);
+					isValid = isValid && validatable.IsValid;
+
+					if (validatable.ValidationErrors != null) {
+						this.ValidationErrors = this.ValidationErrors.Union (validatable.ValidationErrors);
+					}
+				}
+			}
+
+			this.IsValid = IsValid;
+
+			return isValid;
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged = delegate { };
 

@@ -65,6 +65,7 @@
 		<Label Text="Class Title" HorizontalOptions="StartAndExpand" WidthRequest="200" />
 		<Entry HorizontalOptions="StartAndExpand" WidthRequest="200" Text="{Binding Class.Title}" />
 
+		<Button Text="Show Errors" x:Name="showErrors" Clicked="OnShowErrors" />
 
 		<Button Text="Save User" Command="{Binding Save}" />
 	</StackLayout>
