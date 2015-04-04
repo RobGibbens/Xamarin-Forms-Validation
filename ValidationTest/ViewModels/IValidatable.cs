@@ -16,5 +16,4 @@ namespace ValidationTest
 
 		IEnumerable<ValidationFailure> ValidationErrors { get; set; }
 	}
-	
 }

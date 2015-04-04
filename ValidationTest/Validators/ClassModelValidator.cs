@@ -11,5 +11,4 @@ namespace ValidationTest
 			//RuleFor (x => x.ScheduledDate).GreaterThan(DateTime.Now.AddMinutes(-30));
 		}
 	}
-	
 }

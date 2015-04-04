@@ -6,8 +6,8 @@ namespace ValidationTest
 	{
 		public InstructorModelValidator ()
 		{
-			RuleFor (x => x.FirstName).NotEmpty ();
-			RuleFor (x => x.LastName).NotEmpty ();
+			RuleFor (x => x.FirstName).NotEmpty ().Length(2);
+			RuleFor (x => x.LastName).NotEmpty ().Length(2);
 		}
 	}
 }

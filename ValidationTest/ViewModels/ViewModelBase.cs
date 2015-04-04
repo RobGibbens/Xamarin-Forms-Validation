@@ -18,8 +18,7 @@ namespace ValidationTest
 			_validator = validator;
 		}
 
-		public IEnumerable<ValidationFailure> ValidationErrors { get; set; }
-		public string ErrorMessage { get; set; }
+		public IEnumerable<ValidationFailure> ValidationErrors { get; set; } = new List<ValidationFailure>();
 		public bool IsValid { get; set; }
 
 		public virtual bool Validate (IEnumerable<IValidatable> validatables)
@@ -28,6 +27,7 @@ namespace ValidationTest
 			this.ValidationErrors = validationResult.Errors;
 			var isValid = validationResult.IsValid;
 
+			//Validate any child objects
 			if (validatables != null && validatables.Any ()) {
 				foreach (var validatable in validatables) {
 					validatable.Validate (null);
@@ -39,7 +39,7 @@ namespace ValidationTest
 				}
 			}
 
-			this.IsValid = IsValid;
+			this.IsValid = isValid;
 
 			return isValid;
 		}
