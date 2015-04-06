@@ -4,11 +4,7 @@ using System;
 
 namespace ValidationTest
 {
-	public class ValidationLabelBehaviorBase<T> : LabelBehaviorBase<T>
-	{
-	}
-
-	public class InstructorFirstNameLabelValidationBehavior : ValidationLabelBehaviorBase<InstructorFirstNameLabelValidationBehavior>
+	public class ValidationLabelBehaviorBase<T> : LabelBehaviorBase<T> where T:class
 	{
 	}
 }

@@ -19,11 +19,14 @@ namespace ValidationTest
 			this.Save = new DelegateCommand (OnSave, this.Validate);
 
 			this.Instructor = _repository.GetInstructor ();
-			this.Class = _repository.GetClass ();
+			if (Instructor != null) {
+				Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			}
 
-			//If we want the validation to bubble up, we have to listen for change events
-			Instructor.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
-			Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			this.Class = _repository.GetClass ();
+			if (Class != null) {
+				Class.PropertyChanged += (s, e) => this.Save.RaiseCanExecuteChanged ();
+			}
 
 			//Kick off the inital validation for the screen
 			this.Save.RaiseCanExecuteChanged ();
@@ -38,6 +41,7 @@ namespace ValidationTest
 		public int Age { get; set; }
 		public bool IsAgreementAccepted { get; set; }
 		public string EmailAddress { get; set; }
+
 		public IEnumerable<string> AgeChoices {
 			get {
 				return Enumerable.Range (1, 100).Select (x => x.ToString ()).ToList ();

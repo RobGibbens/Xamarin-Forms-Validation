@@ -14,7 +14,7 @@ namespace ValidationTest
 		{
 			var viewModel = this.BindingContext as MainViewModel;
 			if (viewModel != null) {
-				if (!viewModel.Validate () && viewModel.ValidationErrors.Any (x => x.PropertyName == "EmailAddress")) {
+				if (!viewModel.Validate() && viewModel.ValidationErrors.Any (x => x.PropertyName == "EmailAddress")) {
 					//Email is invalid
 					this.ErrorMessage = viewModel.ValidationErrors.FirstOrDefault (x => x.PropertyName == "EmailAddress").ErrorMessage;
 					IsValid = false;
@@ -23,7 +23,9 @@ namespace ValidationTest
 					this.ErrorMessage = string.Empty;
 				}
 		
-				((Entry)sender).TextColor = IsValid ? Color.Default : Color.Red;
+				((Entry)sender).TextColor = IsValid ? Color.Default : Color.White;
+				((Entry)sender).BackgroundColor = IsValid ? Color.Default : Color.Red;
+
 			}
 		}
 	}

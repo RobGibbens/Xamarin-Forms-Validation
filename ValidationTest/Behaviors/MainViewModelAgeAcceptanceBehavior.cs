@@ -22,8 +22,6 @@ namespace ValidationTest
 					IsValid = true;
 					this.ErrorMessage = string.Empty;
 				}
-
-				((Picker)sender).BackgroundColor = IsValid ? Color.Default : Color.Red;
 			}
 		}
 	}
