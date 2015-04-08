@@ -17,12 +17,17 @@ namespace ValidationTest
 
 			this.BindingContext = _viewModel;
 			InitializeComponent ();
+
+		    agreementSwitch.Toggled += (sender, args) =>
+		    {
+		        ageValidator.Validate(null, null);
+		    };
 		}
 
 		void OnShowErrors (object sender, System.EventArgs e)
 		{
 			var message = "No errors";
-			_viewModel.Validate ();
+			//_viewModel.Validate ();
 			if (_viewModel.ValidationErrors.Any ()) {
 				message = _viewModel
 								.ValidationErrors
@@ -31,5 +36,7 @@ namespace ValidationTest
 			}
 			this.DisplayAlert("Errors", message, "OK");
 		}
-	}
+
+        
+    }
 }

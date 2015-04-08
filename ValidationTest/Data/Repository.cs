@@ -11,8 +11,8 @@ namespace ValidationTest
 		{
 			_classValidator = classValidator;
 			_instructorValidator = instructorValidator;
-			
 		}
+
 		public InstructorModel GetInstructor ()
 		{
 			return new InstructorModel (_instructorValidator);

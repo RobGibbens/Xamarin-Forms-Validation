@@ -1,6 +1,5 @@
-using Xamarin.Forms;
-using System.Linq;
 using System;
+using Xamarin.Forms;
 
 namespace ValidationTest
 {

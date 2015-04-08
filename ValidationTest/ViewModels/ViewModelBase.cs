@@ -1,10 +1,9 @@
-using System.ComponentModel;
-using FluentValidation;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using FluentValidation;
 using FluentValidation.Results;
 using PropertyChanged;
-using System.Linq;
-using System;
 
 namespace ValidationTest
 {

@@ -10,20 +10,28 @@ namespace ValidationTest
 		public EntryValidator (string propertyName) : base ()
 		{
 			_propertyName = propertyName;
-			this.HandleTextChanged += OnTextChanged;
+			this.HandleTextChanged += Validate;
 		}
 
-		void OnTextChanged (object sender, TextChangedEventArgs e)
+		public void Validate (object sender, TextChangedEventArgs e)
 		{
 			var viewModel = this.BindingContext as MainViewModel;
-			if (viewModel != null) {
-				if (!viewModel.Validate () && viewModel.ValidationErrors.Any (x => x.PropertyName == _propertyName)) {
-					//Email is invalid
-					IsValid = false;
-				} else {
-					IsValid = true;
-				}
-			}
+		    if (viewModel != null)
+		    {
+		        if (!viewModel.IsValid && viewModel.ValidationErrors.Any(x => x.PropertyName == _propertyName))
+		        {
+		            //Email is invalid
+		            this.IsValid = false;
+		        }
+		        else
+		        {
+		            this.IsValid = true;
+		        }
+		    }
+		    else
+		    {
+		        this.IsValid = true;
+		    }
 		}
 	}
 }

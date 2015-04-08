@@ -1,7 +1,3 @@
-using System.ComponentModel;
-using FluentValidation;
-using System.Collections.Generic;
-using FluentValidation.Results;
 using System;
 using System.Windows.Input;
 

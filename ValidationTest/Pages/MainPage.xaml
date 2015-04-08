@@ -6,7 +6,7 @@
 		</ResourceDictionary>
 	</ContentPage.Resources>
 
-	<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" BackgroundColor="Aqua">
+	<StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand">
 		<!-- EMAIL ADDRESS -->
 		<Label Text="Email Address" HorizontalOptions="StartAndExpand" />
 		<StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
@@ -34,6 +34,7 @@
 		<StackLayout Orientation="Horizontal" HorizontalOptions="StartAndExpand">
 		
 			<Picker Title="Age" 
+        x:Name="agePicker"
 				WidthRequest="200" 
 				local:PickerCollection.Items="{Binding AgeChoices}" 
 				SelectedIndex="{Binding Age, Mode=TwoWay}">
@@ -51,9 +52,14 @@
 
 		<!-- ACCEPT AGREEMENT -->
 		<Label HorizontalOptions="StartAndExpand" WidthRequest="200" Text="Accept?" />
-		<Switch HorizontalOptions="StartAndExpand" WidthRequest="200" IsToggled="{Binding IsAgreementAccepted}">
+		<Switch HorizontalOptions="StartAndExpand" x:Name="agreementSwitch"
+            WidthRequest="200" 
+            IsToggled="{Binding IsAgreementAccepted}">
 		</Switch>
-		<Label HorizontalOptions="StartAndExpand" WidthRequest="200" FontSize="Small" TextColor="Red" Text="{Binding Source={x:Reference ageValidator}, Path=ErrorMessage}" IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
+		<Label HorizontalOptions="StartAndExpand" WidthRequest="200" 
+           FontSize="Small" TextColor="Red"  
+           Text="{Binding Source={x:Reference ageValidator}, Path=ErrorMessage}" 
+           IsVisible="{Binding IsValid, Converter={StaticResource notBoolConverter}}" />
 
 		<!-- FIRST NAME -->
 		<Label Text="First Name" HorizontalOptions="StartAndExpand" WidthRequest="200" />
