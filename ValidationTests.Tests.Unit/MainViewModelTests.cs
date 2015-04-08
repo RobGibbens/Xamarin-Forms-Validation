@@ -1,20 +1,14 @@
 ﻿using NUnit.Framework;
-using System;
 using ValidationTest;
-using FluentValidation;
-using System.Linq;
 using Moq;
 using Should;
 using Ploeh.AutoFixture;
-using Ploeh.AutoFixture.Kernel;
-using System.Reflection;
 
 namespace ValidationTests.Tests.Unit
 {
 	[TestFixture ()]
-	public class Test
+	public class MainViewModelTests
 	{
-		
 		[Test]
 		public void ViewModel_must_be_invalid_when_created()
 		{
@@ -85,6 +79,41 @@ namespace ValidationTests.Tests.Unit
 			vm.EmailAddress = fixture.Create<string>();
 
 			vm.IsValid.ShouldBeFalse ();
+		}
+
+		[Test]
+		public void ViewModel_must_save_models_when_valid()
+		{
+			var fixture = new Fixture();
+
+			var mainViewModelValidator = new MainViewModelValidator ();
+
+			var repository = new Mock<IRepository> ();
+
+			var vm = new MainViewModel (mainViewModelValidator, repository.Object);
+			fixture.Customizations.Add(new RandomNumericSequenceGenerator(1, 17));
+
+			vm.Age = fixture.Create<int> ();
+			vm.IsAgreementAccepted = true;
+			vm.EmailAddress = fixture.Create<string>() + "@foobar.com";
+
+			vm.Save.Execute (null);
+
+			repository.Verify (x => x.Save (), Times.Once);
+		}
+
+		[Test]
+		public void ViewModel_must_not_save_models_when_invalid()
+		{
+			var mainViewModelValidator = new MainViewModelValidator ();
+
+			var repository = new Mock<IRepository> ();
+
+			var vm = new MainViewModel (mainViewModelValidator, repository.Object);
+
+			vm.Save.Execute (null);
+
+			repository.Verify (x => x.Save (), Times.Never);
 		}
 	}
 

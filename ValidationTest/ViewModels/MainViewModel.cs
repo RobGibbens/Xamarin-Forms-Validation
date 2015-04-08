@@ -48,7 +48,7 @@ namespace ValidationTest
 			}
 		}
 
-		public bool Validate ()
+		private bool Validate ()
 		{
 			var validators = new List<IValidatable> { Instructor, Class };
 			var isValid = base.Validate (validators);
@@ -59,7 +59,9 @@ namespace ValidationTest
 		public DelegateCommand Save { get; private set; }
 		public void OnSave ()
 		{
-			_repository.Save ();
+			if (this.IsValid) {
+				_repository.Save ();
+			}
 		}
 	}
 }
