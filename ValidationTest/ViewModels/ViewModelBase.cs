@@ -58,7 +58,10 @@ namespace ValidationTest
 			var propertyChanged = PropertyChanged;
 			if (propertyChanged != null && propertyName != "ValidationErrors") {
 				propertyChanged (this, new PropertyChangedEventArgs (propertyName));
-				//Validate (null);
+
+				if (propertyName != "IsValid") {
+					Validate (null);
+				}
 			}
 		}
 	}
